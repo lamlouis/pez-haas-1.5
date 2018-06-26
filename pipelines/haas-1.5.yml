@@ -6,13 +6,26 @@ nsxv_edge_params: &nsxv-edge-params
   VCENTER_PWD: {{vcenter_pwd}}
   VCENTER_DATA_CENTER: {{vcenter_data_center}}
   VCENTER_CLUSTER: {{vcenter_cluster}}
-  NSX_EDGE_GEN_NAME: {{nsx_edge_gen_name}}
   NSX_EDGE_GEN_NSX_MANAGER_ADDRESS: {{nsx_edge_gen_nsx_manager_address}}
   NSX_EDGE_GEN_NSX_MANAGER_ADMIN_USER: {{nsx_edge_gen_nsx_manager_admin_user}}
   NSX_EDGE_GEN_NSX_MANAGER_ADMIN_PASSWD: {{nsx_edge_gen_nsx_manager_admin_passwd}}
   NSX_EDGE_GEN_NSX_MANAGER_TRANSPORT_ZONE: {{nsx_edge_gen_nsx_manager_transport_zone}}
   NSX_EDGE_GEN_EDGE_DATASTORE: {{nsx_edge_gen_edge_datastore}}
   NSX_EDGE_GEN_EDGE_CLUSTER: {{nsx_edge_gen_edge_cluster}}
+  NSX_EDGE_GEN_NAME: {{nsx_edge_gen_name}}
+  ESG_CLI_PASSWORD_1: {{esg_cli_password_1}}
+  ERT_SSL_CERT: {{ert_ssl_cert}}
+  ERT_SSL_PRIVATE_KEY: {{ert_ssl_private_key}}
+  ESG_UPLINK_PG: {{esg_uplink_pg}}
+  ESG_UPLINK_IP: {{esg_uplink_ip}}
+  ESG_UPLINK_MASK: {{esg_uplink_mask}}
+  ESG_INTERNAL_PG_1: {{esg_internal_pg_1}}
+  ESG_INTERNAL_IP_1: {{esg_internal_ip_1}}
+  ESG_INTERNAL_MASK_1: {{esg_internal_mask_1}}
+  ESG_INTERNAL_PG_2: {{esg_internal_pg_2}}
+  ESG_INTERNAL_IP_2: {{esg_internal_ip_2}}
+  ESG_INTERNAL_MASK_2: {{esg_internal_mask_2}}
+
 
 resources:
 - name: haas-1.5-nsxv
