@@ -52,7 +52,7 @@ get_cidr() {
 pynsxv_local esg create \
   --esg_name "$NSX_EDGE_GEN_NAME" \
   --esg_password "$ESG_CLI_PASSWORD_1" \
-  --portgroup "$ESG_DEFAULT_UPLINK_PG_1" \
+  --portgroup "$ESG_UPLINK_PG_1" \
   --esg_remote_access True
 
 # Add Cert
