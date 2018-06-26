@@ -1,4 +1,5 @@
-# variables
+---
+
 nsxv_edge_params: &nsxv-edge-params
   VCENTER_HOST: {{vcenter_host}}
   VCENTER_USR: {{vcenter_usr}}
@@ -12,21 +13,16 @@ nsxv_edge_params: &nsxv-edge-params
   NSX_EDGE_GEN_NSX_MANAGER_TRANSPORT_ZONE: {{nsx_edge_gen_nsx_manager_transport_zone}}
   NSX_EDGE_GEN_EDGE_DATASTORE: {{nsx_edge_gen_egde_datastore}}
   NSX_EDGE_GEN_EDGE_CLUSTER: {{nsx_edge_gen_egde_cluster}}
-
-
-
-
-# Not needed
-
-#  OWNER_NAME: {{owner_name}}
-#  ERT_SSL_CERT_CN: {{ssl_cert_cn}}
-#  ERT_SSL_CERT: {{ssl_cert}}
-#  ERT_SSL_PRIVATE_KEY: {{ssl_private_key}}
-#  NSX_EDGE_GEN_NSX_MANAGER_TRANSPORT_ZONE_CLUSTERS: {{nsx_edge_gen_nsx_manager_transport_zone_clusters}}
-#  NSX_EDGE_GEN_NSX_MANAGER_DISTRIBUTED_PORTGROUP: {{nsx_edge_gen_nsx_manager_distributed_portgroup}}
-#  NSX_EDGE_GEN_ENABLE_DLR: {{nsx_edge_gen_enable_dlr}}
-#  NSX_EDGE_GEN_BOSH_NSX_ENABLED: {{nsx_edge_gen_bosh_nsx_enabled}}
-#  ESG_GATEWAY_1: {{esg_gateway_1}}
+#  Not needed
+  #  OWNER_NAME: {{owner_name}}
+  #  ERT_SSL_CERT_CN: {{ssl_cert_cn}}
+  #  ERT_SSL_CERT: {{ssl_cert}}
+  #  ERT_SSL_PRIVATE_KEY: {{ssl_private_key}}
+  #  NSX_EDGE_GEN_NSX_MANAGER_TRANSPORT_ZONE_CLUSTERS: {{nsx_edge_gen_nsx_manager_transport_zone_clusters}}
+  #  NSX_EDGE_GEN_NSX_MANAGER_DISTRIBUTED_PORTGROUP: {{nsx_edge_gen_nsx_manager_distributed_portgroup}}
+  #  NSX_EDGE_GEN_ENABLE_DLR: {{nsx_edge_gen_enable_dlr}}
+  #  NSX_EDGE_GEN_BOSH_NSX_ENABLED: {{nsx_edge_gen_bosh_nsx_enabled}}
+    #  ESG_GATEWAY_1: {{esg_gateway_1}}
 #  ESG_SIZE: {{esg_size}}
 #  ESG_OSPF_PASSWORD_1: {{esg_ospf_password_1}}
 #  ESG_CLI_USERNAME_1: {{esg_cli_username_1}}
@@ -91,4 +87,4 @@ jobs:
     - get: haas-1.5-nsxv
   - task: create-edge
     file: haas-1.5-nsxv/tasks/vsphere/nsxv/create-edge/task.yml
-    params: *nsx-edge-params
+    params: *nsxv-edge-params
