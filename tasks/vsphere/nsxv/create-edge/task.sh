@@ -84,7 +84,7 @@ pynsxv_local esg cfg_interface \
   --vnic_index 1 \
   --vnic_type uplink \
   --vnic_name "vnic1" \
-  --vnic_ip $ESG_INTERNAL_IP_1
+  --vnic_ip $ESG_INTERNAL_IP_1 \
   --vnic_mask $ESG_INTERNAL_MASK_1
 
 pynsxv_local esg cfg_interface \
@@ -93,7 +93,7 @@ pynsxv_local esg cfg_interface \
   --vnic_index 2 \
   --vnic_type uplink \
   --vnic_name "vnic2" \
-  --vnic_ip $ESG_INTERNAL_IP_2
+  --vnic_ip $ESG_INTERNAL_IP_2 \
   --vnic_mask $ESG_INTERNAL_MASK_2
 
 # Configure ospf
