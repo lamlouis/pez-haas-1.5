@@ -7,7 +7,21 @@ image_resource:
   source {repository: lamlouis/pez-pynsxv}
 
 inputs:
-  - name: 
+  - name: haas-1.5-nsxv
 
 run:
-  path: 
+  path: haas-1.5-nsxv/tasks/vsphere/nsxv/destroy-edge/task.sh
+
+params:
+  NSX_EDGE_GEN_NSX_MANAGER_ADDRESS:
+  NSX_EDGE_GEN_NSX_MANAGER_ADMIN_USER:
+  NSX_EDGE_GEN_NSX_MANAGER_ADMIN_PASSWD:
+  VCENTER_HOST:
+  VCENTER_USR:
+  VCENTER_PWD:
+  NSX_EDGE_GEN_NSX_MANAGER_TRANSPORT_ZONE:
+  VCENTER_DATA_CENTER:
+  NSX_EDGE_GEN_EDGE_DATASTORE:
+  NSX_EDGE_GEN_EDGE_CLUSTER:
+  NSX_EDGE_GEN_NAME:
+    
