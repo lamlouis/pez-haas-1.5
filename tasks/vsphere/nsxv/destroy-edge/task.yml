@@ -7,7 +7,7 @@ image_resource:
   source {repository: lamlouis/pez-pynsxv}
 
 inputs:
-  - name: haas-1.5-nsxv
+  name: haas-1.5-nsxv
 
 run:
   path: haas-1.5-nsxv/tasks/vsphere/nsxv/destroy-edge/task.sh
