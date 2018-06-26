@@ -69,7 +69,7 @@ pynsxv_local cert create_self_signed \
 
 pynsxv_local esg cfg_interface \
   --esg_name $NSX_EDGE_GEN_NAME \
-  --portgroup $ESG_UPLINK_PG
+  --portgroup $ESG_UPLINK_PG \
   --vnic_index 0 \
   --vnic_type uplink \
   --vnic_name "Uplink" \
