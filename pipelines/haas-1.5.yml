@@ -70,7 +70,7 @@ resources:
 - name: haas-1.5-nsxv
   type: git
   source:
-    uri: https://github.com/lamlouis/pez-pynsxv
+    uri: https://github.com/lamlouis/pez-haas-1.5
 
 jobs:
 - name: destroy-edge
