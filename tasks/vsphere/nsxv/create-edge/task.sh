@@ -87,7 +87,7 @@ pynsxv_local esg routing_ospf \
   --vnic_ip $ESG_UPLINK_IP \
   -area $ESG_OSPF_AREA \
   -auth_type md5 \
-  -auth_value ESG_OSPF_PASSWORD
+  -auth_value $ESG_OSPF_PASSWORD
 
 # configure default gateway and static routes
 
@@ -105,8 +105,8 @@ done
 
 pynsxv_local esg create_ipset \
   --esg_name $NSX_EDGE_GEN_NAME \
-  --ipset_name Slot-134-Networks \
-  --ipset_value 10.193.206.0/24,10.195.31.0/24
+  --ipset_name "Slot-$HAAS_SLOT-Networks" \
+  --ipset_value $HAAS_SLOT_NETWORKS
 
 pynsxv_local esg set_fw_status \
   --esg_name $NSX_EDGE_GEN_NAME \

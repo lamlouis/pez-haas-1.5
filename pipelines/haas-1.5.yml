@@ -2,6 +2,7 @@
 
 nsxv_edge_params: &nsxv-edge-params
   HAAS_SLOT: {{haas_slot}}
+  HAAS_SLOT_NETWORKS: {{haas_slot_networks}}
   VCENTER_HOST: {{vcenter_host}}
   VCENTER_USR: {{vcenter_usr}}
   VCENTER_PWD: {{vcenter_pwd}}
