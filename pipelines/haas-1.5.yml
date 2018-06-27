@@ -65,11 +65,3 @@ jobs:
   - task: create-edge
     file: haas-1.5-nsxv/tasks/vsphere/nsxv/create-edge/task.yml
     params: *nsxv-edge-params
-
-- name: vmware-config
-  plan:
-  - aggregate:
-    - get: haas_1.5-nsxv
-  - task: vmware-config
-    file: haas-1.5-nsxv/tasks/vsphere/vmware-config/task.yml
-    params: *nsxv-edge-params
