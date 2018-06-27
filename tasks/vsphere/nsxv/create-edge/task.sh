@@ -198,7 +198,7 @@ pynsxv_local lb add_member \
   --port 443 \
   --monitor_port 443
 
-pynsxv_local lb add_pool
+pynsxv_local lb add_pool \
   --esg_name $NSX_EDGE_GEN_NAME \
   --pool_name ERT-HTTP-Pool \
   --monitor default_http_monitor
