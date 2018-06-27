@@ -35,5 +35,5 @@
    --user $ESX_USR \
    --password $ESX_PWD \
    --host $ESX_HOST \
-   -—mtu $MTU \
-   --vswitch vSwitch0
+   --vswitch vSwitch0 \
+   --mtu $MTU
