@@ -8,6 +8,9 @@ nsxv_edge_params: &nsxv-edge-params
   VCENTER_PWD: {{vcenter_pwd}}
   VCENTER_DATA_CENTER: {{vcenter_data_center}}
   VCENTER_CLUSTER: {{vcenter_cluster}}
+  ESX_USR: {{esx_usr}}
+  ESX_PWD: {{esx_pwd}}
+  ESX_HOST: {{esx_host}}
   NSX_EDGE_GEN_NSX_MANAGER_ADDRESS: {{nsx_edge_gen_nsx_manager_address}}
   NSX_EDGE_GEN_NSX_MANAGER_ADMIN_USER: {{nsx_edge_gen_nsx_manager_admin_user}}
   NSX_EDGE_GEN_NSX_MANAGER_ADMIN_PASSWD: {{nsx_edge_gen_nsx_manager_admin_passwd}}
@@ -36,6 +39,8 @@ nsxv_edge_params: &nsxv-edge-params
   OM_NAT_IP: {{om_nat_ip}}
   ERT_NAT_IP: {{ert_nat_ip}}
   PKS_NAT_IP: {{pks_nat_ip}}
+  SECOND_VLAN: {{second_vlan}}
+  MTU: {{mtu}}
 
 
 resources:
@@ -59,4 +64,12 @@ jobs:
     - get: haas-1.5-nsxv
   - task: create-edge
     file: haas-1.5-nsxv/tasks/vsphere/nsxv/create-edge/task.yml
+    params: *nsxv-edge-params
+
+- name: vmware-config
+  plan:
+  - aggregate:
+    - get: haas_1.5-nsxv
+  - task: vmware-config
+    file: haas-1.5-nsxv/tasks/vsphere/vmware-config/task.yml
     params: *nsxv-edge-params

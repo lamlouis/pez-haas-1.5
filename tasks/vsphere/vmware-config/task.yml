@@ -1,0 +1,20 @@
+---
+
+platform: linux
+
+image_resource:
+  type: docker-image
+  source: {repository: lamlouis/pez-pynsxv}
+
+inputs:
+  - name: haas-1.5-nsxv
+
+run:
+  path: haas-1.5-nsxv/tasks/vsphere/vmware-config/task.sh
+
+params:
+  ESX_USR:
+  ESX_PWD:
+  ESX_HOST:
+  SECOND_VLAN:
+  MTU:

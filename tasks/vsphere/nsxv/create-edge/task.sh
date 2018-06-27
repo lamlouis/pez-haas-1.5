@@ -247,12 +247,12 @@ pynsxv_local lb add_vip \
 pynsxv_local lb add_rule \
   --esg_name $NSX_EDGE_GEN_NAME \
   --rule_name URL-Switching-HTTP \
-  --rule_script "acl OM hdr_beg(host) -i opsmgr\r\nuse_backend OpsManager-HTTP-Pool if OM"
+  --rule_script "acl OM hdr_beg(host) -i opsmgr \r\n use_backend OpsManager-HTTP-Pool if OM"
 
 pynsxv_local lb add_rule \
   --esg_name $NSX_EDGE_GEN_NAME \
   --rule_name URL-Switching-HTTPS \
-  --rule_script 'acl OM hdr_beg(host) -i opsmgr\r\nuse_backend OpsManager-HTTPS-Pool if OM'
+  --rule_script 'acl OM hdr_beg(host) -i opsmgr \r\n use_backend OpsManager-HTTPS-Pool if OM'
 
 # add rules to virtual servers
 
