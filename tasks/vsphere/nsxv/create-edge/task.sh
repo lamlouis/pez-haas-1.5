@@ -203,7 +203,7 @@ pynsxv_local lb add_pool \
   --pool_name ERT-HTTP-Pool \
   --monitor default_http_monitor
 
-pynsxv_local lb add_member
+pynsxv_local lb add_member \
   --esg_name $NSX_EDGE_GEN_NAME \
   --pool_name ERT-HTTP-Pool \
   --member_name HAProxy \
@@ -211,12 +211,12 @@ pynsxv_local lb add_member
   --port 80 \
   --monitor_port 80
 
-pynsxv_local lb add_pool
+pynsxv_local lb add_pool \
   --esg_name $NSX_EDGE_GEN_NAME \
   --pool_name ERT-HTTPS-Pool \
   --monitor default_https_monitor
 
-pynsxv_local lb add_member
+pynsxv_local lb add_member \
   --esg_name $NSX_EDGE_GEN_NAME \
   --pool_name ERT-HTTPS-Pool \
   --member_name HAProxy \
@@ -225,7 +225,7 @@ pynsxv_local lb add_member
   --monitor_port 443
 
 # Create Virtual Servers
-pynsxv_local lb add_vip
+pynsxv_local lb add_vip \
   --esg_name $NSX_EDGE_GEN_NAME \
   --vip_name VS-URL-Switching-HTTP \
   --pool_name ERT-HTTP-Pool \
@@ -234,7 +234,7 @@ pynsxv_local lb add_vip
   --port 80 \
   --protocol HTTP
 
-pynsxv_local lb add_vip
+pynsxv_local lb add_vip \
   --esg_name $NSX_EDGE_GEN_NAME \
   --vip_name VS-URL-Switching-HTTPS \
   --pool_name ERT-HTTPS-Pool \
@@ -244,150 +244,24 @@ pynsxv_local lb add_vip
   --protocol HTTPS
 
 # Create Application Rules
-pynsxv_local lb add_rule
+pynsxv_local lb add_rule \
   --esg_name $NSX_EDGE_GEN_NAME \
   --rule_name URL-Switching-HTTP \
   --rule_script "acl OM hdr_beg(host) -i opsmgr\r\nuse_backend OpsManager-HTTP-Pool if OM"
 
-pynsxv_local lb add_rule
+pynsxv_local lb add_rule \
   --esg_name $NSX_EDGE_GEN_NAME \
   --rule_name URL-Switching-HTTPS \
   --rule_script 'acl OM hdr_beg(host) -i opsmgr\r\nuse_backend OpsManager-HTTPS-Pool if OM'
 
 # add rules to virtual servers
 
-pynsxv_local lb add_rule_to_vip
+pynsxv_local lb add_rule_to_vip \
   --esg_name $NSX_EDGE_GEN_NAME \
   --vip_name VS-URL-Switching-HTTP \
   --rule_name URL-Switching-HTTP
 
-pynsxv_local lb add_rule_to_vip
+pynsxv_local lb add_rule_to_vip \
   --esg_name $NSX_EDGE_GEN_NAME \
   --vip_name VS-URL-Switching-HTTPS \
   --rule_name URL-Switching-HTTPS
-
-
-
-
-
-# Configure nat
-#pynsxv_local nat add_nat \
-#  -n $NSX_EDGE_GEN_NAME \
-#  -t snat \
-#  -o '192.168.0.0/16' \
-#  -tip $ESG_SNAT_UPLINK_IP_1
-
-#pynsxv_local nat add_nat \
-#  -n $NSX_EDGE_GEN_NAME \
-#  -t dnat \
-#  -o $ESG_OPSMGR_UPLINK_IP_1 \
-#  -tip '192.168.10.10'
-
-
-# Enable load balancing
-#pynsxv_local lb enable_lb -n $NSX_EDGE_GEN_NAME
-
-# Create lb app profile for http
-#pynsxv_local lb add_profile \
-#  -n $NSX_EDGE_GEN_NAME \
-#  --profile_name PCF-HTTP \
-#  --protocol HTTP \
-#  -x true
-
-  # Create lb app profile for https
-#  pynsxv_local lb add_profile \
-#    -n $NSX_EDGE_GEN_NAME \
-#    --profile_name PCF-HTTPS \
-#    --protocol HTTPS \
-#    -x true \
-#    -cert "$ERT_SSL_CERT_CN"
-
-  #Add monitor for http
-#  pynsxv_local lb add_monitor \
-#    -n $NSX_EDGE_GEN_NAME \
-#    --mon_name http-routers \
-#    --method GET \
-#    --url "/health" \
-#    --protocol HTTP
-
-  #Add monitor for https
-#  pynsxv_local lb add_monitor \
-#    -n $NSX_EDGE_GEN_NAME \
-#    --mon_name https-routers \
-#    --method GET \
-#    --url "/health" \
-#    --protocol HTTPS
-
-# create lb pool
-#pynsxv_local lb add_pool -n $NSX_EDGE_GEN_NAME \
-#  --pool_name http-routers \
-#  --algorithm round-robin \
-#  --monitor http-routers
-
-# add members to pool
-#pynsxv_local lb add_member \
-#  -n $NSX_EDGE_GEN_NAME \
-#  --pool_name http-routers \
-#  --member_name gortr-100 \
-#  --member 192.168.20.100 \
-#  --port 80 \
-#  --monitor_port 8080 \
-#  --weight 1
-
-#pynsxv_local lb add_member \
-#  -n $NSX_EDGE_GEN_NAME \
-#  --pool_name http-routers \
-#  --member_name gortr-101 \
-#  --member 192.168.20.101 \
-#  --port 80 \
-#  --monitor_port 8080 \
-#  --weight 1
-
-#pynsxv_local lb add_member \
-##  --pool_name http-routers \
-  #--member_name gortr-102 \
-#  --member 192.168.20.102 \
-#  --port 80 \
-#  --monitor_port 8080 \
-#  --weight 1
-
-# create app rules
-#pynsxv_local lb add_rule \
-#  -n $NSX_EDGE_GEN_NAME \
-#  -rn "option httplog" \
-#  -rs "option httplog"
-
-#pynsxv_local lb add_rule \
-#  -n $NSX_EDGE_GEN_NAME \
-#  -rn "reqadd X-Forwarded-Proto:\ https" \
-#  -rs "reqadd X-Forwarded-Proto:\ https"
-
-#  pynsxv_local lb add_rule \
-#    -n $NSX_EDGE_GEN_NAME \
-#    -rn "reqadd X-Forwarded-Proto:\ http" \
-#    -rs "reqadd X-Forwarded-Proto:\ http"
-
-
-# create lb vip for http
-#pynsxv_local lb add_vip \
-#  -n $NSX_EDGE_GEN_NAME \
-#  --vip_name GoRtr-HTTP \
-#  --pool_name http-routers \
-#  --profile_name PCF-HTTP \
-#  --vip_ip $ESG_GO_ROUTER_UPLINK_IP_1  \
-#  --protocol HTTP \
-#  --port 80 \
-#  --rule_id "applicationRule-1" \
-#  --rule_id "applicationRule-3"
-
-# create lb vip for https
-#pynsxv_local lb add_vip \
-#  -n $NSX_EDGE_GEN_NAME \
-#  --vip_name GoRtr-HTTPS \
-#  --pool_name http-routers \
-#  --profile_name PCF-HTTPS \
-#  --vip_ip $ESG_GO_ROUTER_UPLINK_IP_1  \
-#  --protocol HTTPS \
-#  --port 443 \
-#  --rule_id "applicationRule-1" \
-#  --rule_id "applicationRule-2"
