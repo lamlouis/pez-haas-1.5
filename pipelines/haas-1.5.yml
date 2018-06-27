@@ -64,7 +64,7 @@ jobs:
   plan:
     - get: haas-1.5-nsxv
       passed: [get-started-job]
-      trigger: true
+#      trigger: true
   - task: destroy-edge
     file: haas-1.5-nsxv/tasks/vsphere/nsxv/destroy-edge/task.yml
     params: *nsxv-edge-params
