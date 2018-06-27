@@ -26,7 +26,7 @@
   --password $ESX_PWD \
   --host $ESX_HOST \
   --portgroup T0-Uplink \
-  --vlanid xxx \
+  --vlanid $SECOND_VLAN \
   --vswitch vSwitch1
 
 # change MTU
