@@ -1,6 +1,7 @@
 ---
 
 nsxv_edge_params: &nsxv-edge-params
+  HAAS_SLOT: {{haas_slot}}
   VCENTER_HOST: {{vcenter_host}}
   VCENTER_USR: {{vcenter_usr}}
   VCENTER_PWD: {{vcenter_pwd}}
@@ -25,7 +26,11 @@ nsxv_edge_params: &nsxv-edge-params
   ESG_INTERNAL_PG_2: {{esg_internal_pg_2}}
   ESG_INTERNAL_IP_2: {{esg_internal_ip_2}}
   ESG_INTERNAL_MASK_2: {{esg_internal_mask_2}}
-
+  ESG_OSPF_AREA: {{esg_ospf_area}}
+  ESG_OSPF_PASSWORD: {{esg_ospf_password}}
+  ESG_DEFAULT_GATEWAY: {{esg_default_gateway}}
+  T0_ROUTER_IP: {{t0_router_ip}}
+  T0_STATIC_ROUTES: {{t0_static_routes}}
 
 resources:
 - name: haas-1.5-nsxv

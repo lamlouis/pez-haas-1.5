@@ -31,22 +31,6 @@ get_cidr() {
   echo "$FIRST_THREE.0/$MASK"
 }
 
-#if [ $NUM_LOGICAL_SWITCHES -gt 9 -o $NUM_LOGICAL_SWITCHES -lt 1 ]
-#then
-#  echo 'Number must be between 1 and 9'
-#  exit 1
-#fi
-# Create logical switches
-#for labwire_id in $(seq $NUM_LOGICAL_SWITCHES); do
-#  pynsxv_local lswitch -n "labwire-$NSX_EDGE_GEN_NAME-$OWNER_NAME-$labwire_id" create
-#done
-
-
-## steps
-#/opt/pynsxv/cli.py esg cfg_interface -n sc2-esg-external-slot-134 --portgroup dvpg-sc2-vlan3076-HaaS-External --vnic_index 1 --vnic_type internal --vnic_name vlan3076 --vnic_ip 10.193.206.1 --vnic_mask 24
-#/opt/pynsxv/cli.py esg cfg_interface -n sc2-esg-external-slot-134 --portgroup dvpg-sc2-vlan3151-HaaS-External --vnic_index 2 --vnic_type internal --vnic_name vlan3151 --vnic_ip 10.195.31.1 --vnic_mask 28
-
-
 # Create an edge
 
 pynsxv_local esg create \
@@ -97,6 +81,68 @@ pynsxv_local esg cfg_interface \
   --vnic_mask $ESG_INTERNAL_MASK_2
 
 # Configure ospf
+
+pynsxv_local esg routing_ospf \
+  --esg_name $NSX_EDGE_GEN_NAME \
+  --vnic_ip $ESG_UPLINK_IP \
+  -area $ESG_OSPF_AREA \
+  -auth_type md5 \
+  -auth_value ESG_OSPF_PASSWORD
+
+# configure default gateway and static routes
+
+pynsxv_local esg set_dgw \
+  --esg_name $NSX_EDGE_GEN_NAME \
+  --next_hop $ESG_DEFAULT_GATEWAY
+
+read -ra ROUTES <<<"$T0_STATIC_ROUTES"
+for i in "${ROUTES[@]}"; do
+  pynsxv_local esg add_route \
+    --esg_name $NSX_EDGE_GEN_NAME \
+    --route_net $i \
+    --next_hop $T0_ROUTER_IP
+done
+
+pynsxv_local esg create_ipset \
+  --esg_name $NSX_EDGE_GEN_NAME \
+  --ipset_name Slot-134-Networks \
+  --ipset_value 10.193.206.0/24,10.195.31.0/24
+
+pynsxv_local esg set_fw_status \
+  --esg_name $NSX_EDGE_GEN_NAME \
+  --fw deny
+
+pynsxv_local esg create_fw_rule \
+  --esg_name $NSX_EDGE_GEN_NAME \
+  --rule_src any \
+  --rule_dst "Slot-$HAAS_SLOT-Networks" \
+  --rule_app any \
+  --rule_action 'accept' \
+  --rule_description 'Allow Inbound Access'
+
+pynsxv_local esg create_fw_rule \
+  --esg_name $NSX_EDGE_GEN_NAME \
+  --rule_src "Slot-$HAAS_SLOT-Networks" \
+  --rule_dst "Slot-$HAAS_SLOT-Networks" \
+  --rule_app any \
+  --rule_action 'accept' \
+  --rule_description 'Allow intra firewall access'
+
+pynsxv_local esg create_fw_rule \
+  --esg_name $NSX_EDGE_GEN_NAME \
+  --rule_src "Slot-$HAAS_SLOT-Networks" \
+  --rule_dst g-Pivotal-Internal-Networks \
+  --rule_app any \
+  --rule_action 'deny' \
+  --rule_description 'No internal access'
+
+pynsxv_local esg create_fw_rule \
+  --esg_name $NSX_EDGE_GEN_NAME \
+  --rule_src "Slot-$HAAS_SLOT-Networks" \
+  --rule_dst any --rule_app any \
+  --rule_action 'accept' \
+  --rule_description 'Allow outbound Access'
+
 
 
 
