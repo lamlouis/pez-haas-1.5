@@ -243,16 +243,25 @@ pynsxv_local lb add_vip \
   --port 443 \
   --protocol HTTPS
 
+## creating rules doesn't work because somehow the \r\n are not intrepreted, so it's hardcoded in the docker image for now.
+
 # Create Application Rules
-pynsxv_local lb add_rule \
-  --esg_name $NSX_EDGE_GEN_NAME \
-  --rule_name URL-Switching-HTTP \
-  --rule_script "acl OM hdr_beg(host) -i opsmgr \r\n use_backend OpsManager-HTTP-Pool if OM"
+#pynsxv_local lb add_rule \
+#  --esg_name $NSX_EDGE_GEN_NAME \
+#  --rule_name URL-Switching-HTTP \
+#  --rule_script "acl OM hdr_beg(host) -i opsmgr \r\n use_backend OpsManager-HTTP-Pool if OM"
+
+#pynsxv_local lb add_rule \
+#  --esg_name $NSX_EDGE_GEN_NAME \
+#  --rule_name URL-Switching-HTTPS \
+#  --rule_script 'acl OM hdr_beg(host) -i opsmgr \r\n use_backend OpsManager-HTTPS-Pool if OM'
 
 pynsxv_local lb add_rule \
   --esg_name $NSX_EDGE_GEN_NAME \
-  --rule_name URL-Switching-HTTPS \
-  --rule_script 'acl OM hdr_beg(host) -i opsmgr \r\n use_backend OpsManager-HTTPS-Pool if OM'
+  --rule_name Whatever \
+  --rule_script 'whatever'
+
+
 
 # add rules to virtual servers
 
