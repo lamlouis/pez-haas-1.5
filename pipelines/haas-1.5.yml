@@ -69,7 +69,7 @@ jobs:
 - name: vmware-config
   plan:
   - aggregate:
-    - get: haas_1.5-nsxv
-  - task: vmware-config2
+    - get: haas-1.5-nsxv
+  - task: vmware-config
     file: haas-1.5-nsxv/tasks/vsphere/vmware-config/task.yml
     params: *nsxv-edge-params
