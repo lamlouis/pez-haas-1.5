@@ -95,7 +95,8 @@ pynsxv_local esg set_dgw \
   --esg_name $NSX_EDGE_GEN_NAME \
   --next_hop $ESG_DEFAULT_GATEWAY
 
-read -ra ROUTES <<<"$T0_STATIC_ROUTES"
+IFS=',' read -ra ROUTES <<<"$T0_STATIC_ROUTES"
+unset $IFS
 for i in "${ROUTES[@]}"; do
   pynsxv_local esg add_route \
     --esg_name $NSX_EDGE_GEN_NAME \
@@ -146,19 +147,6 @@ pynsxv_local esg create_fw_rule \
 
 
 
-
-# Attach logical switches to an edge
-#subnets=(10 20 24 28 32 36 40 44 48)
-#masks=(26 22 22 22 22 22 22 22 22)
-#for labwire_id in $(seq $NUM_LOGICAL_SWITCHES); do
-#  pynsxv_local esg cfg_interface -n $NSX_EDGE_GEN_NAME --logical_switch "labwire-$NSX_EDGE_GEN_NAME-$OWNER_NAME-$labwire_id" \
-#    --vnic_index $labwire_id --vnic_type internal --vnic_name vnic$labwire_id \
-#    --vnic_ip "192.168.${subnets[$labwire_id-1]}.1" --vnic_mask "${masks[$labwire_id-1]}"
-#done
-
-# Configure firewall
-#pynsxv_local esg set_fw_status -n $NSX_EDGE_GEN_NAME --fw_default accept
-
 # Configure nat
 #pynsxv_local nat add_nat \
 #  -n $NSX_EDGE_GEN_NAME \
@@ -171,10 +159,6 @@ pynsxv_local esg create_fw_rule \
 #  -t dnat \
 #  -o $ESG_OPSMGR_UPLINK_IP_1 \
 #  -tip '192.168.10.10'
-
-#pynsxv_local esg routing_ospf -n $NSX_EDGE_GEN_NAME \
-#  --vnic_ip $ESG_DEFAULT_UPLINK_IP_1 \
-#  -area 3505 -auth_type md5 -auth_value ospfarea3505
 
 
 # Enable load balancing
