@@ -144,6 +144,129 @@ pynsxv_local esg create_fw_rule \
   --rule_action 'accept' \
   --rule_description 'Allow outbound Access'
 
+# enable Load Balancer
+pynsxv_local lb --esg_name $NSX_EDGE_GEN_NAME  enable_lb
+
+# add LB IP to the interface
+pynsxv_local esg cfg_interface \
+  --esg_name $NSX_EDGE_GEN_NAME \
+  --portgroup $ESG_INTERNAL_PG_1 \
+  --vnic_index 1 \
+  --vnic_type uplink \
+  --vnic_name "vnic1" \
+  --vnic_ip $ESG_INTERNAL_IP_1 \
+  --vnic_mask $ESG_INTERNAL_MASK_1 \
+  --vnic_secondary_ip $ESG_INTERNAL_LB_IP_1
+
+# create Application Profiles
+pynsxv_local lb add_profile \
+  --esg_name $NSX_EDGE_GEN_NAME \
+  --profile_name URL-Switching-HTTP --protocol HTTP
+
+pynsxv_local lb add_profile \
+  --esg_name $NSX_EDGE_GEN_NAME \
+  --profile_name URL-Switching-HTTPS \
+  --protocol HTTPS --xforwardedfor true \
+  -cert opsmgr.haas-134.pez.pivotal.io \
+  --pool_side_ssl true
+
+# create pools with members
+
+pynsxv_local lb add_pool \
+  --esg_name $NSX_EDGE_GEN_NAME \
+  --pool_name OpsManager-HTTP-Pool \
+  --monitor default_http_monitor
+
+pynsxv_local lb add_member \
+  --esg_name $NSX_EDGE_GEN_NAME \
+  --pool_name OpsManager-HTTP-Pool \
+  --member_name OpsManager \
+  --member $OM_NAT_IP \
+  --port 80 \
+  --monitor_port 80
+
+pynsxv_local lb add_pool \
+  --esg_name $NSX_EDGE_GEN_NAME \
+  --pool_name OpsManager-HTTPS-Pool \
+  --monitor default_https_monitor
+
+pynsxv_local lb add_member \
+  --esg_name $NSX_EDGE_GEN_NAME \
+  --pool_name OpsManager-HTTPS-Pool \
+  --member_name OpsManager \
+  --member $OM_NAT_IP \
+  --port 443 \
+  --monitor_port 443
+
+pynsxv_local lb add_pool
+  --esg_name $NSX_EDGE_GEN_NAME \
+  --pool_name ERT-HTTP-Pool \
+  --monitor default_http_monitor
+
+pynsxv_local lb add_member
+  --esg_name $NSX_EDGE_GEN_NAME \
+  --pool_name ERT-HTTP-Pool \
+  --member_name HAProxy \
+  --member $ERT_NAT_IP \
+  --port 80 \
+  --monitor_port 80
+
+pynsxv_local lb add_pool
+  --esg_name $NSX_EDGE_GEN_NAME \
+  --pool_name ERT-HTTPS-Pool \
+  --monitor default_https_monitor
+
+pynsxv_local lb add_member
+  --esg_name $NSX_EDGE_GEN_NAME \
+  --pool_name ERT-HTTPS-Pool \
+  --member_name HAProxy \
+  --member $ERT_NAT_IP \
+  --port 443 \
+  --monitor_port 443
+
+# Create Virtual Servers
+pynsxv_local lb add_vip
+  --esg_name $NSX_EDGE_GEN_NAME \
+  --vip_name VS-URL-Switching-HTTP \
+  --pool_name ERT-HTTP-Pool \
+  --profile_name URL-Switching-HTTP \
+  --vip_ip $ESG_INTERNAL_LB_IP_1 \
+  --port 80 \
+  --protocol HTTP
+
+pynsxv_local lb add_vip
+  --esg_name $NSX_EDGE_GEN_NAME \
+  --vip_name VS-URL-Switching-HTTPS \
+  --pool_name ERT-HTTPS-Pool \
+  --profile_name URL-Switching-HTTPS \
+  --vip_ip $ESG_INTERNAL_LB_IP_1 \
+  --port 443 \
+  --protocol HTTPS
+
+# Create Application Rules
+pynsxv_local lb add_rule
+  --esg_name $NSX_EDGE_GEN_NAME \
+  --rule_name URL-Switching-HTTP \
+  --rule_script "acl OM hdr_beg(host) -i opsmgr\r\nuse_backend OpsManager-HTTP-Pool if OM"
+
+pynsxv_local lb add_rule
+  --esg_name $NSX_EDGE_GEN_NAME \
+  --rule_name URL-Switching-HTTPS \
+  --rule_script 'acl OM hdr_beg(host) -i opsmgr\r\nuse_backend OpsManager-HTTPS-Pool if OM'
+
+# add rules to virtual servers
+
+pynsxv_local lb add_rule_to_vip
+  --esg_name $NSX_EDGE_GEN_NAME \
+  --vip_name VS-URL-Switching-HTTP \
+  --rule_name URL-Switching-HTTP
+
+pynsxv_local lb add_rule_to_vip
+  --esg_name $NSX_EDGE_GEN_NAME \
+  --vip_name VS-URL-Switching-HTTPS \
+  --rule_name URL-Switching-HTTPS
+
+
 
 
 

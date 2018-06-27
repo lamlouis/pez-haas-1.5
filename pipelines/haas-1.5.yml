@@ -23,6 +23,7 @@ nsxv_edge_params: &nsxv-edge-params
   ESG_UPLINK_MASK: {{esg_uplink_mask}}
   ESG_INTERNAL_PG_1: {{esg_internal_pg_1}}
   ESG_INTERNAL_IP_1: {{esg_internal_ip_1}}
+  ESG_INTERNAL_LB_IP_1: {{esg_internal_lb_ip_1}}
   ESG_INTERNAL_MASK_1: {{esg_internal_mask_1}}
   ESG_INTERNAL_PG_2: {{esg_internal_pg_2}}
   ESG_INTERNAL_IP_2: {{esg_internal_ip_2}}
@@ -32,6 +33,10 @@ nsxv_edge_params: &nsxv-edge-params
   ESG_DEFAULT_GATEWAY: {{esg_default_gateway}}
   T0_ROUTER_IP: {{t0_router_ip}}
   T0_STATIC_ROUTES: {{t0_static_routes}}
+  OM_NAT_IP: {{om_nat_ip}}
+  ERT_NAT_IP: {{ert_nat_ip}}
+  PKS_NAT_IP: {{pks_nat_ip}}
+
 
 resources:
 - name: haas-1.5-nsxv
