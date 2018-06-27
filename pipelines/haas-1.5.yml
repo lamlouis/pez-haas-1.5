@@ -56,7 +56,7 @@ jobs:
   plan:
   - get: haas-1.5-nsxv
   - task: get-started-task
-    file: haas-1.5-nsxv/tasks/vsphere/nsxv/destroy-edge/task.yml
+    file: haas-1.5-nsxv/tasks/get-started-job/task.yml
     params: *nsxv-edge-params
 
 
