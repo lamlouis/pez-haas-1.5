@@ -172,7 +172,7 @@ pynsxv_local lb add_profile \
   --esg_name $NSX_EDGE_GEN_NAME \
   --profile_name URL-Switching-HTTPS \
   --protocol HTTPS --xforwardedfor true \
-  -cert opsmgr.haas-134.pez.pivotal.io \
+  -cert "opsmgr.haas-" + $HAAS_SLOT + ".pez.pivotal.io" \
   --pool_side_ssl true
 
 # create pools with members
