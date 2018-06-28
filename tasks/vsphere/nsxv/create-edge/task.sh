@@ -42,11 +42,11 @@ pynsxv_local esg create \
 # Add Cert
 
 echo "$ERT_SSL_CERT" > cert.crt
-echo "$ERT_SSL_PRIVATE_KEY" > cert_pkcs5.key
+echo "$ERT_SSL_PRIVATE_KEY" > cert_pkcs8.key
 
-# Python doesn't output PKCS1 keys, but NSX requires it. Dumb hack to get around this
+# Python doesn't output PKCS5 keys, but NSX requires it. Dumb hack to get around this
 
-openssl rsa -in cert_pkcs5.key -out cert.key
+openssl rsa -in cert_pkcs8.key -out cert.key
 
 
 pynsxv_local cert create_self_signed \
