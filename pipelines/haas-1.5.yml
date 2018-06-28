@@ -59,6 +59,15 @@ jobs:
     file: haas-1.5-nsxv/tasks/get-started-job/task.yml
     params: *nsxv-edge-params
 
+- name: vmware-config
+  max_in_flight: 1
+  plan:
+  - get: haas-1.5-nsxv
+    passed: [get-started-job]
+    trigger: true
+  - task: vmware-config
+    file: haas-1.5-nsxv/tasks/vsphere/vmware-config/task.yml
+    params: *nsxv-edge-params
 
 
 - name: destroy-edge
@@ -79,14 +88,4 @@ jobs:
     trigger: true
   - task: create-edge
     file: haas-1.5-nsxv/tasks/vsphere/nsxv/create-edge/task.yml
-    params: *nsxv-edge-params
-
-- name: vmware-config
-  max_in_flight: 1
-  plan:
-  - get: haas-1.5-nsxv
-    passed: [get-started-job]
-    trigger: true
-  - task: vmware-config
-    file: haas-1.5-nsxv/tasks/vsphere/vmware-config/task.yml
     params: *nsxv-edge-params
