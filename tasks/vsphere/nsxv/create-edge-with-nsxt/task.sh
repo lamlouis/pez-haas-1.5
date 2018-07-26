@@ -283,40 +283,50 @@ pynsxv_local lb add_rule_to_vip \
 
 # ssh to OM01
 pynsxv_local nat add_nat \
-  -esg_name $NSX_EDGE_GEN_NAME \
-  -nat_type dnat \
-  -original_ip $ESG_INTERNAL_LB_IP_1 \
-  -translated_ip $OM01_NAT_IP \
-  -original_port 22 \
-  -translated_port 22 \
-  -nat_vnic=0
+  --esg_name $NSX_EDGE_GEN_NAME \
+  --nat_type dnat \
+  --original_ip $ESG_INTERNAL_LB_IP_1 \
+  --translated_ip $OM01_NAT_IP \
+  --original_port 22 \
+  --translated_port 22 \
+  --nat_vnic=0 \
+  --protocol=tcp \
+  --description='SSH to OM01'
 
 # Diego SSH
 pynsxv_local nat add_nat \
-  -esg_name $NSX_EDGE_GEN_NAME \
-  -nat_type dnat \
-  -original_ip $ESG_INTERNAL_LB_IP_1 \
-  -translated_ip $PAS_SSHPROXY_VIP_NAT_IP \
-  -original_port 2222 \
-  -translated_port 2222 \
-  -nat_vnic=0
+  --esg_name $NSX_EDGE_GEN_NAME \
+  --nat_type dnat \
+  --original_ip $ESG_INTERNAL_LB_IP_1 \
+  --translated_ip $PAS_SSHPROXY_VIP_NAT_IP \
+  --original_port 2222 \
+  --translated_port 2222 \
+  --nat_vnic=0 \
+  --protocol=tcp \
+  --description='Diego SSH'
+
 
 # TCP Router
 pynsxv_local nat add_nat \
-  -esg_name $NSX_EDGE_GEN_NAME \
-  -nat_type dnat \
-  -original_ip $ESG_INTERNAL_LB_IP_1 \
-  -translated_ip $PAS_TCPROUTER_VIP_NAT_IP \
-  -original_port 10000-10050 \
-  -translated_port 10000-10050 \
-  -nat_vnic=0
+  --esg_name $NSX_EDGE_GEN_NAME \
+  --nat_type dnat \
+  --original_ip $ESG_INTERNAL_LB_IP_1 \
+  --translated_ip $PAS_TCPROUTER_VIP_NAT_IP \
+  --original_port 10000-10050 \
+  --translated_port 10000-10050 \
+  --nat_vnic=0 \
+  --protocol=tcp \
+  --description='TCP Routing'
+
 
 # Jumpbox
 pynsxv_local nat add_nat \
-  -esg_name $NSX_EDGE_GEN_NAME \
-  -nat_type dnat \
-  -original_ip $ESG_INTERNAL_LB_IP_1 \
-  -translated_ip $JUMPBOX_IP \
-  -original_port 3389 \
-  -translated_port 3389 \
-  -nat_vnic=1
+  --esg_name $NSX_EDGE_GEN_NAME \
+  --nat_type dnat \
+  --original_ip $ESG_INTERNAL_LB_IP_1 \
+  --translated_ip $JUMPBOX_IP \
+  --original_port 3389 \
+  --translated_port 3389 \
+  --nat_vnic=1 \
+  --protocol=tcp \
+  --description='Jumpbox'
