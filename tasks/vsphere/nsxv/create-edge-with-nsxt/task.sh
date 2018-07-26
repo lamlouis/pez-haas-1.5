@@ -1,4 +1,4 @@
-nat#!/bin/bash -eu
+#!/bin/bash -eu
 
 echo "Creating edge"
 
