@@ -261,6 +261,12 @@ pynsxv_local lb add_vip \
 #  --rule_name URL-Switching-HTTPS \
 #  --rule_script 'acl OM hdr_beg(host) -i opsmgr \r\n use_backend OpsManager-HTTPS-Pool if OM'
 
+# doesn't matter the rule name. It's hardcoded.
+pynsxv_local lb add_rule \
+  --esg_name $NSX_EDGE_GEN_NAME \
+  --rule_name Whatever \
+  --rule_script 'whatever'
+
 # add rules to virtual servers
 
 pynsxv_local lb add_rule_to_vip \
