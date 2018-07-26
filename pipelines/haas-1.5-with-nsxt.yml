@@ -92,5 +92,5 @@ jobs:
     passed: [destroy-edge]
     trigger: true
   - task: create-edge
-    file: haas-1.5-nsxv/tasks/vsphere/nsxv/create-edge/task.yml
+    file: haas-1.5-nsxv/tasks/vsphere/nsxv/create-edge-with-nsxt/task.yml
     params: *nsxv-edge-params
