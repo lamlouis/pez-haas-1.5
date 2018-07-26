@@ -206,7 +206,7 @@ pynsxv_local lb add_member \
 pynsxv_local lb add_pool \
   --esg_name $NSX_EDGE_GEN_NAME \
   --pool_name PAS-GoRouterVIP-HTTP-Pool \
-  --monitor default_http_monitor
+  --monitor default_tcp_monitor
 
 pynsxv_local lb add_member \
   --esg_name $NSX_EDGE_GEN_NAME \
@@ -219,7 +219,7 @@ pynsxv_local lb add_member \
 pynsxv_local lb add_pool \
   --esg_name $NSX_EDGE_GEN_NAME \
   --pool_name PAS-GoRouterVIP-HTTPS-Pool \
-  --monitor default_https_monitor
+  --monitor default_tcp_monitor
 
 pynsxv_local lb add_member \
   --esg_name $NSX_EDGE_GEN_NAME \
