@@ -211,8 +211,8 @@ pynsxv_local lb add_pool \
 pynsxv_local lb add_member \
   --esg_name $NSX_EDGE_GEN_NAME \
   --pool_name PAS-GoRouterVIP-HTTP-Pool \
-  --member_name HAProxy \
-  --member $PAS_GOROUTER_VIP_NAT_IP: \
+  --member_name PAS-GoRouterVIP \
+  --member $PAS_GOROUTER_VIP_NAT_IP \
   --port 80 \
   --monitor_port 80
 
@@ -224,8 +224,8 @@ pynsxv_local lb add_pool \
 pynsxv_local lb add_member \
   --esg_name $NSX_EDGE_GEN_NAME \
   --pool_name PAS-GoRouterVIP-HTTPS-Pool \
-  --member_name HAProxy \
-  --member $PAS_GOROUTER_VIP_NAT_IP: \
+  --member_name PAS-GoRouterVIP \
+  --member $PAS_GOROUTER_VIP_NAT_IP \
   --port 443 \
   --monitor_port 443
 
