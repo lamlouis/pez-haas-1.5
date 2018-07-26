@@ -10,7 +10,7 @@ inputs:
   - name: haas-1.5-nsxv
 
 run:
-  path: haas-1.5-nsxv/tasks/vsphere/nsxv/create-edge/task.sh
+  path: haas-1.5-nsxv/tasks/vsphere/nsxv/create-edge-with-nsxt/task.sh
 
 params:
   HAAS_SLOT:
